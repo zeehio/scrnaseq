@@ -22,12 +22,11 @@ class WorkflowScrnaseq {
             Nextflow.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
         }
 
-        if (params.custom_geometry && !params.custom_chemistry) {
-            log.info "Lauching custom geometry in aligner with no custom chemistry value."
-        }
-
-        if (!params.custom_geometry && params.custom_chemistry) {
-            log.error "Custom chemistry require a custom geometry (--custom_geometry). It cannot be used alone."
+        if (
+            (!params.custom_geometry && params.custom_chemistry) ||
+            (params.custom_geometry && !params.custom_chemistry)
+        ) {
+            log.error "Error: --custom_geometry and --custom_chemistry must be used together."
             System.exit(1)
         }
     }
@@ -95,7 +94,7 @@ class WorkflowScrnaseq {
     * this function formats the protocol such that it is fit for the respective
     * subworkflow
     */
-    static formatProtocol(protocol, aligner) {
+    static formatProtocol(protocol, aligner, custom_chemistry) {
         String new_protocol = protocol
         String chemistry = ''
         String other_parameters = ''
@@ -118,6 +117,9 @@ class WorkflowScrnaseq {
                 // case 'dropseq':
                 //     new_protocol = 'dropseq'
             }
+
+            // using custom chemistry/geometry
+            new_protocol = custom_chemistry ?: new_protocol
         }
 
         // star

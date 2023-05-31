@@ -147,11 +147,11 @@
             "properties": {
                 "custom_geometry": {
                     "type": "string",
-                    "default": "None"
+                    "description": "Set a custom chemistry geometry for aligner."
                 },
                 "custom_chemistry": {
                     "type": "string",
-                    "default": "None"
+                    "description": "Give a name for your custom geometry."
                 }
             }
         },

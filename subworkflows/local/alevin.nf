@@ -40,8 +40,8 @@ workflow SCRNASEQ_ALEVIN {
         transcript_tsv = SIMPLEAF_INDEX.out.transcript_tsv.collect()
         ch_versions = ch_versions.mix(SIMPLEAF_INDEX.out.versions)
 
-        if (!txp2gene) { 
-            txp2gene = SIMPLEAF_INDEX.out.transcript_tsv 
+        if (!txp2gene) {
+            txp2gene = SIMPLEAF_INDEX.out.transcript_tsv
         }
     }
 
