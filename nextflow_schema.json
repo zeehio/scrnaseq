@@ -139,6 +139,22 @@
                 }
             }
         },
+        "geometry_options": {
+            "title": "Geometry / Chemistry options",
+            "type": "object",
+            "description": "Set custom geometry and (or) chemistry values for aligners. Currently only working for alevin (simpleaf).",
+            "default": "",
+            "properties": {
+                "custom_geometry": {
+                    "type": "string",
+                    "default": "None"
+                },
+                "custom_chemistry": {
+                    "type": "string",
+                    "default": "None"
+                }
+            }
+        },
         "alevin_options": {
             "title": "Alevin Options",
             "type": "object",

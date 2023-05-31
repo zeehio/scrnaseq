@@ -21,6 +21,15 @@ class WorkflowScrnaseq {
         if (!params.fasta) {
             Nextflow.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
         }
+
+        if (params.custom_geometry && !params.custom_chemistry) {
+            log.info "Lauching custom geometry in aligner with no custom chemistry value."
+        }
+
+        if (!params.custom_geometry && params.custom_chemistry) {
+            log.error "Custom chemistry require a custom geometry (--custom_geometry). It cannot be used alone."
+            System.exit(1)
+        }
     }
 
     //
