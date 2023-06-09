@@ -22,12 +22,12 @@ class WorkflowScrnaseq {
             Nextflow.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
         }
 
-        if (
-            (!params.custom_geometry && params.custom_chemistry) ||
-            (params.custom_geometry && !params.custom_chemistry)
-        ) {
-            log.error "Error: --custom_geometry and --custom_chemistry must be used together."
-            System.exit(1)
+        if (!params.custom_geometry && params.custom_chemistry) {
+            log.warn "--custom_chemistry was set, but --custom_geometry was not. This will have no impact in the pipeline."
+        }
+
+        if (params.custom_geometry && !params.custom_chemistry) {
+            log.warn "--custom_geometry was set, but --custom_chemistry was not. This will try to overwrite the default geometry for used chemistries without giving a custom name."
         }
     }
 
