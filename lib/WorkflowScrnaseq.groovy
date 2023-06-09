@@ -23,7 +23,8 @@ class WorkflowScrnaseq {
         }
 
         if (!params.custom_geometry && params.custom_chemistry) {
-            log.warn "--custom_chemistry was set, but --custom_geometry was not. This will have no impact in the pipeline."
+            log.error "--custom_chemistry was set, but --custom_geometry was not."
+            System.exit(1)
         }
 
         if (params.custom_geometry && !params.custom_chemistry) {
