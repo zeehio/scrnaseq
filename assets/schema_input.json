@@ -24,7 +24,14 @@
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
+                "anyOf": [
+                    {
+                        "pattern": "^\\S+\\.f(ast)?q\\.gz$"
+                    },
+                    {
+                        "maxLength": 0
+                    }
+                ],
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             },
             "expected_cells": {
@@ -42,6 +49,6 @@
                 "meta": ["sample_type"]
             }
         },
-        "required": ["sample", "fastq_1", "fastq_2"]
+        "required": ["sample", "fastq_1"]
     }
 }
