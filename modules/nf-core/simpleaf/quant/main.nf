@@ -19,8 +19,8 @@ process SIMPLEAF_QUANT {
     tuple val(meta4), path(map_dir)                                     // mapping results
 
     output:
-    tuple val(meta), path("${prefix}/af_map")       , emit: map, optional: true // missing if map_dir is provided
-    tuple val(meta), path("${prefix}/af_quant")     , emit: quant
+    tuple val(meta), path("${prefix}/af_map/")       , emit: map, optional: true // missing if map_dir is provided
+    tuple val(meta), path("${prefix}/af_quant/")     , emit: quant
     path  "versions.yml"                            , emit: versions
 
     when:
