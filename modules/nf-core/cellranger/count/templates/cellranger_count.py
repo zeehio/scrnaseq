@@ -37,9 +37,17 @@ fastq_all.mkdir(exist_ok=True)
 # do not match "SRR12345", "file_INFIXR12", etc
 filename_pattern = r"([^a-zA-Z0-9])R1([^a-zA-Z0-9])"
 
+# Allow as well patterns where the R is omitted, if the read R is at the end of the filename, as in:
+#  - fastq_001/SRX12280738_SRR15992120_1.fastq.gz
+#  - fastq_001/SRX12280738_SRR15992120_2.fastq.gz
+
 for i, (r1, r2) in enumerate(chunk_iter(fastqs, 2), start=1):
-    # double escapes are required because nextflow processes this python 'template'
-    if re.sub(filename_pattern, r"\\1R2\\2", r1.name) != r2.name:
+    allow_rename = (
+        # double escapes are required because nextflow processes this python 'template'
+        re.sub(filename_pattern, r"\\1R2\\2", r1.name) == r2.name
+        or r1.name.replace("_1.fastq.gz", "_2.fastq.gz") == r2.name
+    )
+    if not allow_rename:
         raise AssertionError(
             dedent(
                 f"""\
